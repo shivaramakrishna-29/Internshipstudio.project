@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Demo Company - Best Clothing Store</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Products data
+        const products = [
+            { id: 1, name: "Men's Blue Shirt", price: 799, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop", category: "Men" },
+            { id: 2, name: "Women's Red Dress", price: 1299, image: "data:image/webp;base64,UklGRjwmAABXRUJQVlA4IDAmAABQpgCdASpMAboBPj0ejESiIaERyRysIAPEsbd1/8WSOZZw37kV6qn7W+rnm/x8/Gn5qeSe5H2h5I9nf/M8Bup/KQ8v/VP+L+bn+R+i/+/9a3+T/wX/B9wf+sf2z/j/4H3yekD9vvUJ+t3/V/wvui/8X/uf5X3O/0n+0f9P+6/6X5AP6Z/cvWp9Vf+9f9L//+4l/O/7X/6/XE/a74Uv7F/pv/b/pf+l8kP9E/wv/w9gD0AOoXQ78MfN2LvaN/NvzD/K9f3br+2+I7kp21PbcRV+b53/azzYuSK/E/9H1Sf71+y/vG/6H/0+7f4J/XHsO9Kb92/ZVGUAG/or7CyRwa92I+/Wmvt3+2qCHGWLo3d+dVMYmJN+aTTyShUv1NrUGq0GbRxuwnx98HhCI5M5iSQ8W0oJkd67OzmtPerOXm5RnMySwWGqTUM0Cj80Zxz/DcZjJYBsrB8SvtKQcf/0+DWBzHnZAdIHxzAq5Y1vsz1VfZ8TvaCoE9E5JwPrvD3fh4il9Z00/KIyQVYX0ZZC7NPA3j4hFDOA66mP1vEYRJdLAslzDdaaNSkgaWJFsrKiGUr/vM86fPN3sKqAKiFjnpNMRiOdshey2pBw3thAat50kODlWpS5mOnl9VfprLJua6cDvssHbQPbmTZl8+G830oi1DA+eeDnHLIlVm/QJDJL5/NwJqtqFDfl3LtOM37jTJvBDl6htSPSVfb9VpZA3pvznqqQyhK7Vfe6uBq33btcqGMwmdZW9hnb6N49NmCxDcGrT6AMpFi2MB2bxRHwqjDfye/Ngb88E/6pDNUzD1ZFoMcsBMTWkKPmpgO72o19SFYXsTGY6GtdmcTE4cWrGY+i6QwN3YgRIi5vcCng+bCgSbynv3ov/5zovNFQ83JmzZlXqpMBt46tuoyHcrjLIMLt66J7rl8Wpvg1pX9+meO3D+6PH0/gX/Iisva+EO2fJtXaZN+uFIw4lg0F0dmzk2klY44b+mfpMqHLF6VLAZeJPplWoZMN4AFkz3ao+e0D2DkBAUNUy8XMMksvoAVP1XtTI20xufhjiVitgyESM7x/iBvdHGBxW0kxNopbT9SkVdzOa81uBJJ9s9r8gzOd5g64LqlQPMnRv9s+NVxYLktOX9I0lQ69xztkgpsYyhAz84pTaVLzgjaO5eK5d/gUrikQaF569XYwUrh0DvigJ+cFJmqo07mT2Y8o/VaUwuH00ErYfdGoEOBxuaBAhMkJbUCWpf9gFz0fJCQwjfq7zeElC/6n4cexXziCwKEyvZaVUIZpsp1z/NelNABzDxDd+XbXnLLhbj6elFCyUWrIyCWSaQUq1pLBZawIR9M0Kw+JHeLY87SqAXGD2eSKPDNgmAwt/3sqIYABC/Al9vc/ORoQxiX3A4DCEf9K+Z6g6Psq+n1SNcpndg9f/I1ZD1BxfeHfSbHV0EIjUCqYx6hqf6z3qfYUvjqNO9T3bjklCskN0F3dY/EBQQFC85II/4PjDUvflFVAgTrNEzXb2y272R5q705i2ePMfjh999sHQKCV6kgr2AR7B2A8ItmSBLQDckVArAsop12wQcv5aUyuAyfGxyfp4fn9Oyyb9o0Ip9Vg1Hu5auseQbICEU39P8vt80qjumnU2qe+vOQoP24A9q+yT84QSKadHGal+ZPe4IkM+7e8dpM0c18zPYVnqpzu0tkJpiS9g2qLJDk49KfVJqM00twVMfAZ06B8hUqlM7L9tvrbGDhRNl2TupVRYw7FIrfkY9aQ04GkWKzbyCXH8xukp1r0Pp2OXA09B3AAAP7xmDRpeZxqdhOgQ+PhpFd/TmrrHhXr8y0nLombp2o38TK/Y+Z3tMwR3j3QsqmifDM7cDsm3W/2bpyPO2p7UNzYf7l0pvpafgw+8bIH5IEybXF7Opl3CToi8/2BQgRdNF26VJHPWjW2FLwaZnLV6sbNZC14QdqN2l71+/7bQtnH+zr96TCrJz3+42E/bwxjfU3z4YRZHJ0dCUEvNZy6oPxBDzF0EzstobO0SNGh3npjEejUHNounApRiFKBrc3pnzqZb66tO/vKPjtWg39ubfgcRCl33IL9HG0pV9PvzGLCd83YGdPXJQcXwy7Iw56Jvrn5edeLtHNplx9LHhHhf4zU5CCZvdLsmix8H0P1U9oMwsCa7GQmOZluXwfW42Uu3JK8occA5zJWb8d/8UW8Jz3IYwd3PDno+GtZRiRpioXkH53sssSzFj+Zl/r1dfcvruHlgE8NT+uiaHI99HvoscF6wSCQPBE1nQ0OsSxPzXHboHQhmfQVeaKwN803S40O/gPV4zw19dJIT56kWhY+Wpt6cJuS6PBPjt+XLy4JpArpYgz+LzoJ/2yToYnuQXyP+C6ogdxTwn+a9s7yOnP/usKQPTSULcks77IRyebrUI080idSIrGzf2v9OtgHVaTF3+cNaK/LugqNl1fJmPVuUPfsyHNCdA55zMPIo87he8d4OQRB1XyDP08um87h/cd1Y3elKOyyYp53/38UifEDICPIFQhQE+uppUZ67CQ4Cxwx3XC7qVpFGMkebnKmxO09hYktLs3KaOnU4S7Ce3uGoolgnJxolUNgpldcq1F+mkf7L6EfTvYOTSzFxT5HJ4TFwLOquGsjlesbw7INrdmCB3tdoAkK6U0kNjNGRpI94ZHQ40lqXgWbskv/J/mlGF7STyXHreAnjmKpr/aIyqwDEr7EJdwARFSsS9hHECOoI1w+d3gM2LT33R3VkEuVZC4xkMlesE5AnVh0CBP8IU3V0bMU22MZQd9vCFZ3oboMS+dtk/6tsrp3n2yoAW4VsrB9fPdOxvUwf+MVaJGonjT5NLElmd/I2uejsKm/Fp2s6KFQ+kG225wh2ktJo8vnDhMdk/BuAc4BRqHM/zH9iF7+arN6xPHPlB/mfuXNB1kE+7w/2f6iUgIaS0ql/M3+alPjbUTtCrENX35xWc1RNlzRLOIjQ0PocnmczSeKFkz3+YbSIKYqOgePtTP5XXefYX9bC5SWGI1JhkzxfMIzq0E6sVigfajittKQACRQEa3bwOq2rexl2XR0vcMrbyPUB8wbK5O74Ap40Kjze2kZf/CwGI8FUeEBmg/GknwxwOiCIQZWB0XIdFRRGA2pqy/F2gbb0DhYRiFbABY0wc42VLz2+RpDFoDaVBx/PB+j5tEYRgyRLEpY4nyhNZS3G8Z+qLpxUBnO0hqd4ODQgxV6MijGLaEo+1vl+Ufb5oWTpEC0N3o8izZzvNpVTIc8bEdZxR11jpKLSCLui5I91PY3FEgUp4VzZ6gKwnEIJ9eAR/F37Jg6Hj3XP1jB40ulGMf/D97f+390APWPz+Zaz3kibT679uIe9v7ek3iRN//65/oereyVPYKiTsOz8LKvRqUpITEDGELLx9wrbzun58nySZsgh1KbH0msCX1ysb62y7avOhHOo2e5AlvoG+XVXJ16TnqQ6KvMlXqgOORM0cxxoG77EMr4ab19Z/MrArZOpvKdp+rRpSy7z2dBnVuq3rDL9wVsuCbfu84Dtw0GlfOdMJ+3Yw/x1M/KJLgR7W/xK5lrxumNUPwlM5+0ZVua2PfR5G2y+oYZButeXJuzSOXEqj62PGpuTzz5pjSlcfR/YRHss41pN5nZpO0ERhJ2LTCo4U+9lUoGDEDpLVypoTLEsHk71jBawjjiy6f9HjRIhsccKMMCgfhRv/mQ4js4KYzwdR6TJIBrQOVPWyTC5k2IJX/b0cRSujuP/8t9fWMUifI5Jig8u4N12dMCXkcxCj5uEuCvAnW46evthuCiOQ5iYBDMuyHqnr6n+bAKq7UFasClTr66CO/zMxVp8jY/BJcgwYosgVBz+FHoOgLYjmfUFO/EUjqXLPCCqynjMw95EazEHFrRYw4eVn3NQCORBwsGwRgE7p2BtPAx9fCVPQF+MpM6yIRERbM/mwr4RPnaJG0AEQgyrgXxHL/XH+osK8sK8gZGN5HJQfN6Tz98i6oDAwCoz1qftOvjoQmnvqjKrGgsGs7k/gf/bu2TYoGTXUaJvzeGi5cMId1KsoRrseiyapWy7fAW6fqxwth9dzwjHmxv3CEY/fAPJ0hT9LL86RlXHX+UQ4wx7XJA3BSK430oMgJ1V17h+JwFdFPnOA5bBOXmZuSpnB+abur97OdRT4LoKvVfk+AyfQN4JrgGqYUO1VxDIxP9pg67u9DSNQ23NIrViIDZ9FPjo+UNkJwsQOsw8EeVF/rfCw9mymyGvZWYYCqrrQDBdbmPNX2Uy1qPCe0R4vYommaHLVrOx4P+ZDmWRLlvdpxfHyGfMacDFua6flKhrp/SVt2mkl8MWn7nqfMYMRdZGl+QtjctcngnOTeWuuhvjrl9lj4elu6lpZikD+ah2GQDSqE5KybiHKeE2VO9sZRuZql4ezCENBQXpiaJY8BwmK6/NCRC55R9T0dL+9s1DEEdoUiYU0pBvG6x6mxClB6EsHCgLQUDIXVQeLPlee9hYpdIqfeKTyCXKkAhPAfK6cbkXDEXr/5G7qzsL7yAj6doGVwBR0j1tW8fHCg/YcmLurP3HwkPBWEv+Jl6a97UjSH0TExGguRCj8TFzNiI3EdYjC0uUnMf/EqXtCdSaRMCp8H2CXLtxvSzIZYwFJZQg0Rj9jfT9K+R4aEH1V4kZBWYZTCd2AgNm2uRA179yP74u2QsL0X4YTxsRF34CIX0+u4qqMvPrpA27PBa9HZAHSptxAJR6CponBHOfFbsRV7a7O9hXiE7jFgb34zj/E95uScDbnKEoXVb8+kNR/fxCgHWhbAI0RnARZ7Dsu/Oxrgi/jQLjTeU6J8C++Hu6Er9/GphRe7BBAeNYO3J5pQVJEn/o8h7DW0eASH+bSiCEVUidVJy+igr34Z7EkJJ2t4iFK7tSmgwqMNa1a4SvueHO/TKE6tPom1qKHYJKUR16EHMraaNR6MSKm+6nVkNA3xhu37gnbpFt9pCXAc3yO2NI4xbM04q35RZb6bqh6fpaArt6uxZiecQGtA//DzxDVFxtRVpGVs2q3vANB/5yK9Bwa71z+/zm/q4FQ6ekY9dHW04J5pLcsAIIrC/ErFurSZXEC1/Nspe9PYoK9d6kXcIWz0CD0QP0tIeMaeNyRdZ77NcHtnUY6Ajl+FKZArIPMxiidB5Uy3r071KvvCBq2PJW7HfFSgTFdbDqsG1QndSHUqT5ostdQY4sQxRzX9Og5SBNSgou/Y206PxlrJKJWiWO0la7OlA+dyytj2SYIhMesXTtQy+iTu4AlbjYqK00jQoIxEoujSrWUIopRpGHbeRagHY0G7fd9gtS5ywHuOq8Ox6eKOHluknnRBboKdnyJGwm7xGzsXuvMJeLIHyU0iSTkGXr6wogzkUQdl9rAAB0p/LkUaBiENin8kSi23OZ6uY/eu5EtYR7n4nI1SYMnBnHyq9jFWAaHisxyXoaMjF+0Re1u6TMh58d0AKwXIPz4dfnfOgNHjD0ggXwrIBNTT4ic6697xLICuVhclY9Sa8B5nO32xj+lHqi2lVGskUp41sr5YNfj6RyUqNj7cs5OHzC9fVzpBblolDLFzquam2MHJx6JKrfJdFd4ZFjKJ4k3XrTU9cKaq9Ri04op9fcc3P7OlPoCw2cGNa6kyY1kxmL3w1UkrwiiS9K6c6aMiY6Em/H6+SXc7IGnk/AlH3ANvXblJr+PyduGBS3yqjUAJ3+EVVIft0FpYvkBYLzz883Q+GrBv2P0ELtFvAUfCBo6/Cd2GZhcAQZ5vUD7PSC8aVk7PHZPJP1/ydDWuqAfGcm9gAn7OewaAO8wUaGUSM7Ry1m601ug5rS7IMXOujZg/YV3glogvmdXVl64tMvWtal2Jbk6jf9DAooXcdVxDLxT6C5uR+kRnEPkQq8U5U0y5YrXCMjjfTcvSwC7EnmOqeHYHuihgHuXMkrdIPkH4QUn56Vx+ZMSfEwSI/a/SCEv1WD+ykVsIN3CbRmvrklhFiWJ3CTGqY7SBYW+kbaioXxExaYF2EbHcsJIhMYur3feGt786FNV4OwyfM+YYHuh9NtACp5IBOYjH/wGXUoYXlnrdvKbuHMos3Dtqi+YzkEmOKbqrUNCUF+iatqxMq81t+y2feTf2nYf/YWFrL+lU2wKBu0wBBr9U/ycy6JMPnUAuVP/jQfP1j8jOxHaQto6Nrt48KRcJvGxeCxZCU+JXplQEsKmSE/8B/HNsyqA8yPhZAEq/gq7fARSadSo9lMJ7Teiw2o9y5+g2fgO5dyOj8QhbzM2yxnRILgkxebdDeILBL69lpzbFB5saD9ctpOI88FSzNgKEc7ZhlxrNWEX8KguVvi02YDODvcKD+LcW6JLfKwxLmBowmAja485FhyU/tySzf2U2D51z2NIzna72wgD+GQ30ym4q580AfWr5YjUdxPy+J5pE5OQ8GkMoVXT7A6nY4RovqaPZgOl5MhOtOnFvHl1BQNCzHXvNQgr6zLJLsYxivV+GJzMyOy3c0sPcetsDaRS9lc5EzjQtfBwGR8PNeDIvkyB7mozGyCwpa80M6o6OVu45JvZ3Su7bSS0pMN8UR+cL7YLp+U5ueiUhaKUXZajqdxbG53W4hlxzowjndwAuB5rLOGqXj5seK4fz0rY9JP0Z1JGRp3goanE0EIiR/Lk8JpmaSymDh458blW0YVHRwAkRC50rJVlh8qC3tBeJf9iNwFDSJCLGOY0/Wukb3JVw4Wh/Vkfr6g5+6kXbh8jKTIzGY49+MhGshd3XK++VKTP9oGw/w5vAoGD/4eJ5TXfxU9AltPgFgFwkrHLVD6gI7HuPCpH8UYLfHxZZvV9DqC7clJ/yYEWc4o78vQN9ZMF6rs5Gk23i/8fbgf21iRaL4PyLhHDX7w1UQUsGSdvfp2LGNokvSrgxqtjo0dC2nMYrHyDSuIJ1oBjoYsXTSjuoYtGivDQzWAklJM1+CaeFRDU4yEU8Mi84ycq9JTIz4SaRpGGzVANuvo2akpy6w89c5vhva7OXjrjF3r7IkZe0/2tmHTZb+153earx3r9omYP/+tNKa6UI2w7xQNiYVW7UYj8gnZ1fz38O7EaZlJ3AmUEnsbz8GIN2o+OjrnK6KuFSPukApvKZ74EXDNqTuZT/LuhugH43hCO4ADfpuR34MGHVewicnBUoev+j16/BlyyUzoQjgO/itRXrRhIvcT6vWtcazWeq6CG05YZ1YEt3GEwWUW5ZdzeIx13G7sLXgLshF8TdFGD4HY33Cnyemh24A37bq37EIaZDS1Crnt0gswLQSdMnPUWUzSv6qaR61uUYVMPlh6qqbR7y4HQ7x6xC+cPmF6SSQR4OUY/t+rxFtNtaBsXQKWh+Upf2bDqtFkL3YkzXKJGwA4ITERDHWUcC6iy9P6nspkX8vZrVMuLFl/cT20s2fyxRrxE2RTwFwaIHjxDuDRm8BIeLeg911MPm8MIz9QkgOewNmYyTCnPWTi+wIB0Q0mF+6zdLpBa9PPDpiZy8HufbSRSWPzsxtGw7ENJoyyLsaihN6VUiHsVhFKykHtpXsIqW0EpWoVufKliMAyZn3KL72FFxfX+23i3P/iFvXS8XhEEjSwhUXC4sJJUnm3mGDuyOYFd2kAyVYjNETv46FiW/+Mp8y0tS5mcFULS1x0uZS6Zcc+N5e0grljzxAiqyjU5y6mXBvE0gZ77jKNcQEbNkAGSeU2xkdY943Q1IlV18yqyy9AfJ9pUakyzB44nzeQ+Fu73nQ/Yl5YpAuUR5zPjW8Yc1arAjPnK051Rr5F/ckpKy7uZCJObcUJPqfvj/gWQppDJWZx5sqFSLejQkJDS7RUbFR/GkckC3yLoxb48OGvJe774hUksrxPTsuvF4z7jfo79SU3dArbwX1cgOPwGgkfxknUu7TSncSg0Pzuuft36lfAUg13tUbblBUuOHo73JmquUXWQHJ/uKPdOKxvqEpsOOAQa+M4SuUt2zyS+9ov+PlwYjmNOsz4t3EXHH2ntHT+p/lpe1VZxufqyPr6VY9EI74Ldv3ou/4YkywBzjqdLNmB/dbExI1l1TdBL9zy0sNcZdLnE/R5eUC+OathHwqabrPD+GR3cFTq/6i6lQdnbdCjmBLvyR1sFnJ7k9wKcCD18PL5gObbzri1C1YSXkoBOwlg/ffpY2pXARmnkFF6m7qliduUrkcgyYfM0xydZFgFXn+AFiX/stNbfhr3MhR/CTuTqcNHxmPGzmlkSHoEUSwFzVsft7/9IUhWTk5Yph/vebMJ5WB7HwLCCfQ05atxyHL7r0Cuk/tbpqseuYP8ufgIBc1piN6BEADI5s+BXSFAcBkqvxI2+tnPMM1nHhni6tpjMqZqIVUuKgy3jLwKW+fiZSPvbT3i42oM9qEw4ejDMOGhQunL+HZ5I81jpERGDv6i3fyRNrNEV4b3UorzWLuIt3hS/6PcHQPV2jmZ/VQzjqyastqIH66r2ghBlLwuM2WWcT9HwgzHAG2mg5BbkubaDWs5JrSEZHnUZNensqsAryOPF2MeTaUQH7bffWj8mkMwpb677p+jbfhjXWPRdaA8DbtoVId+u6Ayi08f3lugn73IQM9SnQa4DB4FS7lp12ihrlkkhgmJhZ2EkzqAW8D24vM0saR7a7aoRcKX3eC9hwuwaMOu9KCSOlUrls74itFfRz4nSGc9+yKXpEWC4WtRNGjoXRxDVsDmrlNVqOb07cJNcBMCO00SsFMHoHVjoEeG+H4vpOZndhDCd8jJSaYr9MeIQpgeQf0JDOEbSX4HTHpsLe4rpV9CRTCAxARTImuTHrNxjUbWiyiu8JAHjzL8ShhLtXJdVDNvNlD8Fvb5HDE8xLb6XmRRVhXtYCeWukXZ7LFH6N9wnkgr20NDOaYuU8RE2gbQRO1W6niaNYvSz6shRgM078Ne46ouoBXY/ABh01vBMJNJJfFbQkLF1aHXCoNmzhipbqwBPp1AykpDwNMEH/8Fbb3Gjy87sQ9JcYxUprMLQHJ0Bwso7gqa8wGXT2jWupmo0HfYzNDjdf1O2wmI7tLYypj9KEVWY/Ru8VmEBMIusTqAacgch8T4RvLAcNYZAHREeHkYYcXku5CaRQJC6UuomsWodasKuY4BnRo353Y3aIU5uuL8c129liWtS6CW08EugzHaEDWiUimZhSepjAfg3lvIF4tJp47a1EsEv+gSQtS7zKcYV5QpBfWa7fNXFMltdBC7HBCimMXuDLLeu3P2kgKlIqzWRVx4vnd7Oj98eTnqdMVRJrIUqXZdSCfuBFNaJK4OfsJdFsnD0MGdSYBFdbbuuSfS3SB+kO/a9Zx4buWJRFsqlQIt/Cbj1Vt0QmAn/aXUE1WqV61Rx5Z72DEp3gu5FRr41qTWtzrtVsGog84UKYLQBQoW1cXa6aGmE34OZyreVSEzmdsJ3Mq4mZMBD7vfJFvK0gMBSMIH5U3zS/S4x5B2Va5mS2VvDh90d4tNygY2r2fiCDB7OYvGCyf8lkb8wANjGH9WXphF6VIecZ1YpBYmOVSTXKJBosQ2vtdILX8/7hVwrQB/HPNPmi7bmJntWxjQDYl7YCFe1wrd//Ue9d65eun3/OXyS708z3calSFmWaS9HfXN6QDZkaHcgIt6bwGDTXkVyMKo+kMayd38OEsuAWZWyllysMSBifJrFy9igcj2wuw+cKOTTE/oHtdP1egVJpNnrqFFrjBu26DlfojAbwlPpF4vChKprTNb1QBEKAAoaehEMAjLuwJuCqK7aTOQ4p/cGtTz+/ljqXzA2xhXQxcG8Pu0oKJNHXL1D7tittZrhAjW/yN0cAkdh92CBcvpARdraNicEaMBQ7rWuI3dyZzdLX8Vut2yLVs7q7aQo/MVdN9aUwOsxCKKagTNTbUDolCydYzBeDYMQ/FRoV6yWhgxiw9/Bz2vS8S8laEukw5+YDZBnoppnkgQcJWpD+8eDaxnTAk+Wfx+rO0moHnyWxBlx0/OG++TM8ZWuJvKYR/14FRoKsRuvboOczZrXBm3dtzafclNgmfPzYoLeVJdCMjJXbe2hVAbVOpXjdlqFKkMnC2B/5bjeFzXTDizvrJ51fWiGGjy/kqV1IxBN9L+E7oS05+DiGq9phbpkfwT3Z7lhvWLkdfhohhSmNnpJFPNE6OaTIClMpe+Wh2LLppvRoU1RJI66taP4lpDTfZ5ZSP4Ud/2TVoyEGkm1oTDY+9nTUqJMB2mCrt70U8uv9d1e2rWaJIMIvMp23IvPJvrPhrIkUIrvO3VtWvGnGXbmzhGrFJ+KIBX8yU/OyHXKsJQkVvtfHK5wCCUlEMhPRgLZLvfmgt8bauJSh/rXCHCTml32Pho09kpKs6e4LHILJ490Es6l57QzEEAhcsA+e26C59NkVu2ImgUi4Fm5bnA6AQHWkiazsS0XFzSBIyAMT16F0djcmDDBaSUzWA/f8P2aFVs16v9ym8rWQZBLjk87kWB/ECkgXu5rowZirxHZF7iA1nC5v+f5YHXucSv2OOxy9uy7TL48JYzHm0Rm793pATnet+pTH7BOaAepJVTf3GE8Zycd28T5ooHo0znahpdwbsEt1iNTc0ci3CYvKbRq+koCgH/qcuvduXaI31tTY8fqbryy+gzwiZvaT62f8WuZQ6YBRDQRkWAkDDz5V9DApcoXw6HsSp7uKBNjeD1kzlf0LVZfxks/09Mum32+03f3vAxa+2wxQhTe3FCS2APfOZ3rTPpIS6w+GlrkokFBjZZ3prQry0qAQKvfLrB9uZ7CQIbxxq5T3/Tjj79IIWGtkbMv5gz+9XFMSzBP88DnEUnPlqb+UtIm/+7Vcw5KnRvKV+PbYsT+VqPe+F4Xl4uz4btsKbrnqqWyUVHa5ognKEEwd4TKHBTYqENmAqTnhHx2A3Y8REypfcpSZK6lX1ShhpxBKWJzpcsXiefxmFdzZuL+HieYiaOTmmqejN5TCVJSWWb+n96VFiGUme/NWNuVvm1SDn+CCZqIN6DS4CWWsmLkgwdPc23N8VxRxT126PAOxi07hRfv0q9CZYpaQXNCQI5rXL/sC1vYSMTN1IBDZuACshPeAP+ohi+m2VBEZX7HBEoIdeZi4V2vRcYhcFSAhADIEt0T+9gQAiRJQ9RTG87jHXGttM7pOqyuMua2/ddT7rlL9Yv0rZozqS14QoNizt3w21XSrCfXH1oDwVdvI5xNIniUf/d9Yt1AWWBH/E4+kfeX6cKXgp8hUNuJPayb2b5Nr5//ZxT/3Tv1hvQlSRop0vakK+JUkGJpWxbFQrni6FXIpduMgieEdEiEWx2U4t/1YBqojFaFKSNUQVxVr+HAqigsqMpadMSpJzidP/0cFPQLt1pIC/djhzXX0q89sbZQYCRX3oOhVLgP9OWDblKaCMdYGIu/4W57GcpOp4X+wJwsDu+vwDkS6aTzMNcVaRo7qldxEPXu6oZga0fm8De0lf87v0cV5rTDvVIYTSGMWb47GrwOi8J6/VAE6yqX2h4wkr0SeXYQrprrKPPGqGVw/M5xnuQdm1uU3eJ1OJwFgUqcnRPqjXJc5pt9xDuvqYoF3+zdh7/g4offf7AW1qgrO69HNSJG0rugwZds9OPJ0cWUA8LaJBW1m1t2lgJy2TFhvQc7iiecwoeP9WHcJqRaTI2aqrxCJ12cTab6xheEjeNh3ii7h8O3e/nCLH5/qJUSYrTLDn5a+qbw9QnoDFjD8Ft/ATEHIvTCK8AvR60502wsorTTPoCxhBMLS1rngGrR2ebBbA+PBo+9WzsQX84pJDR6tpWt6ptlMbyU1IziJs0E5BsKbtmViOYUyPcTTbXRQ6blkkY/WPnjYl1E5VjTZVqXkN+cjzAHBsdmnX7kdNnzobpyQ14yzym20QLsveDLQMc4XNU9QdjHOu2ptm8/XhssbRq48RZP20Bk8grUWR9tIjFWLxgRmHtupWJ1Vj8fCTfHNc4no37/8grCS0nu++/jAjFSgwbxUHO/kHqh5Q4Rc7rwLLKDw31dAFB1iEMrFQ7KtjQamsHaRwhgYQA88mYbql3vmls2H7kmoB+unbYGfcYhBdYwidft0TWAywhKN2Hk7E6ginegyprFZfhdzcH7ZoOQD8qVBPOJOFBsPbWX/760Z0Fzrd+B7ZJsDcIATdNEp+KE3pavi4S4sQd0t8XQ/nB0OHT7WVeoTjNiO1OIDBgeJ6jXdqBVRwS1F3oofva2ZIyIQQ0ucy/+ldfOMVfPYcDvvlm0aEgPdytVWNo5QUSqFatOuogcG+MLvrQw3xOAuTrQrXWO3hjElO1hjCBPqRD7mcLHER1b1ecW0gCz3lExtJ1Xoy9Cr3stDcEA3khzOvyDsNvDaqSxEZ00WOsLhGcEWEj4ju+BlX/2FUtpykFfuQ02xdP4FrK8BZ/mEY7fmGmICHu6vDH8ouAGuy9QZcHe5RfOesI17l+356CVPWPALvA2WLsYjkZ6pjX0YJYxVkhXAnEwXeeSHEXBnOQczEXr+o5PST4eFQ2DjdaJiP+cQdzFDB+baLR9Puq+vTn9jTWHESX0/gB2tAa2gnhvMkRaUKFxbUCCG3E8XGTXzcP4FWXKUcf1g3s2EQJidiC8qerAXEI4USbo4RspkaqB7zxd0BdgVRG9VjR9G+SMQHJkMm+4jgSypRSID52GjflEWJqGs+Quu0NHIrqIT6JdXgfdeYHdQUGg4gkWpvcz5Abs4KpHQA60HUBwerXx+IALmKXfNfDNrUQwRUNO3zD7pVHOSifC65Twg5pvJTgYkR0CGPOSUgC87MjARMMR88aLPv4vB0ZVAm/LdpoC9zN33xr1Ya166QcOMsPYvFLYD43EL/aKO3ka2dEObh87/s9Sfd4f9WBpa7tMPtNzK3eotH35F1rUeGNGDp1MxLNDoK5IDmtUmxm21vUsObCW5anvxMj2YepSV3rFAcihXNKD85ZFMzb1489qTTFKPJrtO7hJWfVCFhveMcwAYqmsBmJqkZc7V+bAwDLK/EFu5MiI4QT2H0lL4KDeWV8tBiX5Ka7AEmyTaG8wDihvB/VdD15GDYuC/iRbCewo5b3+9DV5F6mHN+wmY7RwpGMDH7x/pxNeFGNc21ouxUAAAAAA==", category: "Women" },
+            { id: 3, name: "Black Jeans", price: 999, image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop", category: "Men" },
+            { id: 4, name: "White T-Shirt", price: 399, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop", category: "Men" },
+            { id: 5, name: "Floral Top", price: 599, image: "data:image/jpeg;base64,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", category: "Women" },
+            { id: 6, name: "Denim Jacket", price: 1499, image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop", category: "Men" }
+        ];
+
+        // Navbar Component
+        function Navbar() {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [cartCount, setCartCount] = useState(0);
+
+            return (
+                <nav className="navbar">
+                    <div className="nav-container">
+                        <div className="logo">
+                            <h2>The Demo Company</h2>
+                        </div>
+                        <div className="nav-links">
+                            <a href="#home" className="nav-link">Home</a>
+                            <a href="#products" className="nav-link">Products</a>
+                            <a href="#category" className="nav-link">Category</a>
+                            <a href="#about" className="nav-link">About Us</a>
+                            <a href="#contact" className="nav-link">Contact Us</a>
+                        </div>
+                        <div className="nav-right">
+                            <div className="search-box">
+                                <input 
+                                    type="text" 
+                                    placeholder="Search products..." 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <i className="fas fa-search"></i>
+                            </div>
+                            <div className="cart-icon">
+                                <i className="fas fa-shopping-cart"></i>
+                                <span className="cart-count">{cartCount}</span>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            );
+        }
+
+        // Product Card Component
+        function ProductCard({ product, onAddToCart }) {
+            return (
+                <div className="product-card">
+                    <img src={product.image} alt={product.name} />
+                    <div className="product-info">
+                        <h3>{product.name}</h3>
+                        <p className="price">₹{product.price}</p>
+                        <button 
+                            className="add-to-cart-btn"
+                            onClick={() => onAddToCart(product)}
+                        >
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const [cartItems, setCartItems] = useState([]);
+            const [activeSection, setActiveSection] = useState('home');
+            const [filteredProducts, setFilteredProducts] = useState(products);
+
+            const addToCart = (product) => {
+                setCartItems([...cartItems, product]);
+                alert(`${product.name} added to cart!`);
+            };
+
+            const scrollToSection = (section) => {
+                setActiveSection(section);
+                document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="App">
+                    <Navbar />
+                    
+                    {/* Hero Section */}
+                    <section id="home" className="hero">
+                        <div className="hero-content">
+                            <h1>Welcome to The Demo Company</h1>
+                            <p>Best quality clothing at affordable prices</p>
+                            <button className="cta-btn" onClick={() => scrollToSection('products')}>
+                                Shop Now
+                            </button>
+                        </div>
+                    </section>
+
+                    {/* Products Section */}
+                    <section id="products" className="products-section">
+                        <div className="container">
+                            <h2>Our Products</h2>
+                            <div className="products-grid">
+                                {products.map(product => (
+                                    <ProductCard 
+                                        key={product.id}
+                                        product={product}
+                                        onAddToCart={addToCart}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Category Section */}
+                    <section id="category" className="category-section">
+                        <div className="container">
+                            <h2>Shop by Category</h2>
+                            <div className="category-grid">
+                                <div className="category-card">
+                                    <i className="fas fa-male"></i>
+                                    <h3>Men</h3>
+                                </div>
+                                <div className="category-card">
+                                    <i className="fas fa-female"></i>
+                                    <h3>Women</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* About Section */}
+                    <section id="about" className="about-section">
+                        <div className="container">
+                            <h2>About Us</h2>
+                            <p>We are The Demo Company, providing high quality clothing for everyone. 
+                               Our mission is to make fashion accessible to all.</p>
+                        </div>
+                    </section>
+
+                    {/* Contact Section */}
+                    <section id="contact" className="contact-section">
+                        <div className="container">
+                            <h2>Contact Us</h2>
+                            <p>Email: demo@company.com | Phone: 99876543210</p>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="footer">
+                        <p>&copy; 2026 The Demo Company.</p>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html> convert these code into typed one and indintations also give as simple
